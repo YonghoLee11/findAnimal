@@ -1,10 +1,12 @@
 package java63.servlets.test04;
 
 import java.io.IOException;
+
 import java63.servlets.test04.dao.MemberDao;
 import java63.servlets.test04.domain.Member;
 
 import javax.servlet.GenericServlet;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -19,27 +21,36 @@ public class MemberAddServlet extends GenericServlet {
   @Override
   public void service(ServletRequest request, ServletResponse response)
       throws ServletException, IOException {
+	  
+	try{  
     request.setCharacterEncoding("UTF-8");
     
+    String id = request.getParameter("id");
+    
+    
+    
+    
     Member member = new Member();
-    member.setId(request.getParameter("id"));
+    member.setId(request.getParameter("id2"));
     member.setName(request.getParameter("name"));
     member.setTel(request.getParameter("tel"));
     member.setAddr(request.getParameter("addr"));
     member.setPwd(request.getParameter("pwd"));
     
-     //AppInitServlet.memberDao.insert(member);
-    //ContextLoaderListener.memberDao.insert(member);
-    
-    // MemberDao를 ServletContext 보관소에서 꺼내는 방식을 사용
-    // => 단점: 위의 방식보다 코드가 늘었다.
-    // => 장점: 특정 클래스에 종속되지 않는다. 유지보수에서 더 중요!
     MemberDao memberDao = (MemberDao)this.getServletContext()
                                          .getAttribute("memberDao");
     memberDao.insert(member);
     
+    
+    
+    
+    
     HttpServletResponse orginResponse = (HttpServletResponse)response;
     orginResponse.sendRedirect("list");
+	}catch(Exception e){
+		HttpServletResponse orginResponse = (HttpServletResponse)response;
+	    orginResponse.sendRedirect("merror-form.html");
+	}
   }
   
 }

@@ -30,7 +30,6 @@ public class CheckServlet extends GenericServlet{
 		String pwd = request.getParameter("pwd");
 		
 		
-		
 		MemberDao memberDao = (MemberDao)this.getServletContext()
                                              .getAttribute("memberDao");
 		
@@ -48,16 +47,9 @@ public class CheckServlet extends GenericServlet{
 		orginResponse.sendRedirect("boardAddF?addr="+addr+"&tel="+tel+"&id="+id);
 		
 		}catch(NullPointerException e){
-			orginResponse.sendRedirect("list");	
+			orginResponse.sendRedirect("clerror-form.html");	
 		}
 		
-		
-		
-//		if(member.getId()!=null){
-//	    orginResponse.sendRedirect("board-form.html");
-//		}else{
-//		orginResponse.sendRedirect("list");	
-//		}
 		
 	}
 

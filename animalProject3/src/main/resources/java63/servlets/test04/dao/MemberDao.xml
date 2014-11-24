@@ -61,6 +61,12 @@
   
   </select>
   
+    <select id="checkIn02" parameterType="String" resultMap="memberMap">
+    <include refid="memberSelect"/>
+    WHERE UID=#{id}
+
+  </select>
+  
 </mapper>
 
 

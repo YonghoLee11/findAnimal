@@ -2,6 +2,7 @@ package java63.servlets.test04.dao;
 
 import java.util.HashMap;
 import java.util.List;
+
 import java63.servlets.test04.domain.Member;
 
 import org.apache.ibatis.session.SqlSession;
@@ -94,6 +95,23 @@ public class MemberDao {
         try {
         	return sqlSession.selectOne(
               "test04.MemberDao.checkIn01", paramMap);
+          } finally {
+            sqlSession.close();
+          }
+     
+  }
+    
+    
+    public Member checkIn2(String id) {
+    	System.out.println(id + "id01");
+    	
+    	SqlSession sqlSession = sqlSessionFactory.openSession();
+          
+        System.out.println(id + "id02");
+        
+        try {
+        	return sqlSession.selectOne(
+              "test04.MemberDao.checkIn02", id);
           } finally {
             sqlSession.close();
           }

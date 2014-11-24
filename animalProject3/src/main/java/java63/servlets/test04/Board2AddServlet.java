@@ -21,20 +21,8 @@ public class Board2AddServlet extends GenericServlet {
   @Override
   public void service(ServletRequest request, ServletResponse response)
       throws ServletException, IOException {
-     request.setCharacterEncoding("UTF-8");
-    
-//	protected int no;
-//	protected String breed;
-//	protected String findPlace;
-//	protected String findDate;
-//	protected String gender;
-//	protected String title;
-//	protected String content;
-//	protected String id;
-//	protected String addr;
-//	protected String tel;
-//	protected String photo;
-//	protected Date bDate;
+    try{
+	  request.setCharacterEncoding("UTF-8");
     
     Board board = new Board();
     board.setId(request.getParameter("id"));
@@ -50,18 +38,16 @@ public class Board2AddServlet extends GenericServlet {
     board.setPhoto(request.getParameter("photo"));
     
     
-    //AppInitServlet.boardDao.insert(board);
-    //ContextLoaderListener.boardDao.insert(board);
-    
-    // BoardDao를 ServletContext 보관소에서 꺼내는 방식을 사용
-    // => 단점: 위의 방식보다 코드가 늘었다.
-    // => 장점: 특정 클래스에 종속되지 않는다. 유지보수에서 더 중요!
     BoardDao boardDao = (BoardDao)this.getServletContext()
                                          .getAttribute("boardDao");
     boardDao.insert(board);
     
     HttpServletResponse orginResponse = (HttpServletResponse)response;
     orginResponse.sendRedirect("Blist");
+    }catch(Exception e){
+    	HttpServletResponse orginResponse = (HttpServletResponse)response;
+        orginResponse.sendRedirect("../member/baerror-form.html");
+    }
   }
   
 }
